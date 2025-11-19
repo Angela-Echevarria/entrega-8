@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>eMercado - Compra exitosa</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700,900" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script>
+      const tema = localStorage.getItem("tema") || "light";
+      document.documentElement.setAttribute("data-theme", tema);
+    </script>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="img/japLogo.png" alt="Logo JAP" class="me-2 logo-nav" />
+              <span class="fw-bold text-white fs-4">e-Mercado</span>
+            </a>
+            <button id="theme-toggle" class="theme-toggle ms-3" onclick="cambiarTema(event)">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+
+          <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link text-white" href="index.html"><i class="fas fa-home me-1"></i>Inicio</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="categories.html"><i class="fas fa-th-large me-1"></i>Categorías</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="sell.html"><i class="fas fa-plus-circle me-1"></i>Vender</a></li>
+              <li class="nav-item"><a class="nav-link text-white" href="cart.html"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
+              <li class="nav-item" id="userNav"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <!-- Tarjeta de éxito -->
+          <div class="card border-0 shadow-lg compra-exitosa-card">
+            <div class="card-body text-center py-5">
+              <!-- Icono de éxito -->
+              <div class="success-icon mb-4">
+                <i class="fas fa-check-circle"></i>
+              </div>
+
+              <!-- Mensaje principal -->
+              <h1 class="mb-3">¡Compra realizada con éxito!</h1>
+              <p class="lead mb-4">Tu pedido ha sido procesado correctamente.</p>
+
+              <!-- Detalles de la compra -->
+              <div class="compra-detalles p-4 rounded mb-4">
+                <h4 class="mb-3">Resumen de tu compra</h4>
+                <div class="row text-start">
+                  <div class="col-md-6 mb-3">
+                    <p class="mb-1"><strong>Número de pedido:</strong></p>
+                    <p id="numero-pedido" class="text-muted">-</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <p class="mb-1"><strong>Fecha:</strong></p>
+                    <p id="fecha-pedido" class="text-muted">-</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <p class="mb-1"><strong>Tipo de envío:</strong></p>
+                    <p id="tipo-envio" class="text-muted">-</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <p class="mb-1"><strong>Forma de pago:</strong></p>
+                    <p id="forma-pago" class="text-muted">-</p>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <p class="mb-1"><strong>Dirección de envío:</strong></p>
+                    <p id="direccion-envio" class="text-muted">-</p>
+                  </div>
+                  <div class="col-12">
+                    <hr class="my-3" />
+                    <h5 id="total-pedido" class="text-end mb-0">Total: $0</h5>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Productos comprados -->
+              <div class="productos-comprados mb-4">
+                <h4 class="mb-3">Productos comprados</h4>
+                <div id="lista-productos"></div>
+              </div>
+
+              <!-- Botones de acción -->
+              <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="index.html" class="btn btn-primary btn-lg">
+                  <i class="fas fa-home me-2"></i>Volver al inicio
+                </a>
+                <a href="categories.html" class="btn btn-outline-secondary btn-lg">
+                  <i class="fas fa-shopping-bag me-2"></i>Seguir comprando
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-end"><a href="#">Volver arriba</a></p>
+        <p>
+          Este sitio forma parte de
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a>
+        </p>
+      </div>
+    </footer>
+
+    <div id="spinner-wrapper">
+      <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/mostrarUsuarioLogueado.js"></script>
+    <script src="js/proteccion.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/compra-exitosa.js"></script>
+  </body>
+</html>
+

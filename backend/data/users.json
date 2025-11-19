@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1763424425202",
+    "email": "eze@eze.com",
+    "contrasena": "123123",
+    "createdAt": "2025-11-18T00:07:05.202Z"
+  },
+  {
+    "id": "1763424505491",
+    "email": "eze2@eze.com",
+    "contrasena": "123123",
+    "createdAt": "2025-11-18T00:08:25.491Z"
+  },
+  {
+    "id": "1763424591734",
+    "email": "eze3@eze.com",
+    "contrasena": "123123",
+    "createdAt": "2025-11-18T00:09:51.734Z"
+  }
+]

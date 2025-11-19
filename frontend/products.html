@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>eMercado</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:300,400,700,900"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Aplicar tema inmediatamente para evitar flash blanco -->
+    <script>
+      const tema = localStorage.getItem("tema") || "light";
+      document.documentElement.setAttribute("data-theme", tema);
+    </script>
+  </head>
+
+  <body>
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="img/japLogo.png" alt="Logo JAP" class="me-2 logo-nav" />
+              <span class="fw-bold text-white fs-4">e-Mercado</span>
+            </a>
+            <button
+              id="theme-toggle"
+              class="theme-toggle ms-3"
+              onclick="cambiarTema(event)"
+            >
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link fw-semibold text-white" href="index.html">
+                  <i class="fas fa-home me-1"></i>Inicio
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link fw-semibold text-white"
+                  href="categories.html"
+                >
+                  <i class="fas fa-th-large me-1"></i>Categorías
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-semibold text-white" href="sell.html">
+                  <i class="fas fa-plus-circle me-1"></i>Vender
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link fw-semibold text-white position-relative"
+                  href="cart.html"
+                >
+                  <i class="fa fa-shopping-cart"></i>
+                  <span class="ms-1">Carrito</span>
+                  <span
+                    id="cart-count"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style="font-size: 0.65rem"
+                    >0</span
+                  >
+                </a>
+              </li>
+              <li class="nav-item" id="userNav"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="pb-5 container">
+      <h1 class="text-center my-5 fw-bold" id="titulo-categoria"></h1>
+
+      <div class="container">
+        <!-- Buscador -->
+        <div class="row mb-4">
+          <div class="col-md-6 offset-md-3">
+            <input
+              type="search"
+              id="searchInput"
+              class="form-control"
+              placeholder="Buscar productos por nombre o descripción..."
+            />
+          </div>
+        </div>
+
+        <!-- Ordenamiento -->
+        <div class="row">
+          <div class="col text-end">
+            <div
+              class="btn-group btn-group-toggle mb-4"
+              data-bs-toggle="buttons"
+            >
+              <input
+                type="radio"
+                class="btn-check"
+                name="options"
+                id="sortAsc"
+              />
+              <label class="btn btn-light" for="sortAsc"
+                ><i class="fas mr-1 fa-sort-amount-down"></i> <b>$</b></label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="options"
+                id="sortDesc"
+              />
+              <label class="btn btn-light" for="sortDesc"
+                ><i class="fa-solid fa-arrow-up-short-wide"></i> <b>$</b></label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="options"
+                id="sortByCount"
+                checked
+              />
+              <label class="btn btn-light" for="sortByCount"
+                ><i class="fas fa-sort-amount-down mr-1"></i><b>Rel.</b></label
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtro por rango de precio -->
+        <div class="row filtros">
+          <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+            <div class="row container p-0 m-0">
+              <div class="col">
+                <p class="font-weight-normal text-end my-2">Precio</p>
+              </div>
+              <div class="col">
+                <input
+                  class="form-control"
+                  type="number"
+                  id="precioMin"
+                  placeholder="min."
+                  min="0"
+                />
+              </div>
+              <div class="col">
+                <input
+                  class="form-control"
+                  type="number"
+                  id="precioMax"
+                  placeholder="máx."
+                  min="0"
+                />
+              </div>
+              <div class="col">
+                <div class="btn-group" role="group">
+                  <button class="btn" id="filtrarPrecio">Filtrar</button>
+                  <button class="btn btn-light" id="clearRangeFilter">
+                    Limpiar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="list-group" id="cat-list-container"></div>
+        </div>
+
+        <div
+          id="mensaje-alerta"
+          class="alert alert-warning text-center d-none mt-5"
+          role="alert"
+        ></div>
+
+        <div class="row g-5 justify-content-center" id="catalogo">
+          <!-- Aquí se insertan las tarjetas dinámicamente -->
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-end"><a href="#">Volver arriba</a></p>
+        <p>
+          Este sitio forma parte de
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+            >Jóvenes a Programar</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/mostrarUsuarioLogueado.js"></script>
+    <script src="js/proteccion.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart-badge.js"></script>
+    <script src="js/theme-toggle.js"></script>
+  </body>
+</html>

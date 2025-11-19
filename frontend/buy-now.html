@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>eMercado - Finalizar compra</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:300,400,700,900"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script>
+      const tema = localStorage.getItem("tema") || "light";
+      document.documentElement.setAttribute("data-theme", tema);
+    </script>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="img/japLogo.png" alt="Logo JAP" class="me-2 logo-nav" />
+              <span class="fw-bold text-white fs-4">e-Mercado</span>
+            </a>
+            <button
+              id="theme-toggle"
+              class="theme-toggle ms-3"
+              onclick="cambiarTema(event)"
+            >
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+
+          <button
+            class="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item" id="userNav"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="container my-5">
+      <h1 class="mb-4 text-center">Finalizar compra</h1>
+      <div class="row">
+        <!-- Formulario -->
+        <div class="col-lg-8 mb-4">
+          <form id="buy-form" novalidate>
+            <!-- Datos de envío -->
+            <div class="p-4 rounded shadow-sm buy-form-section">
+              <h4 class="mb-3">Datos de envío</h4>
+              <div class="mb-3">
+                <label for="departamento" class="form-label"
+                  >Departamento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="departamento"
+                  required
+                />
+                <div class="error-message" id="error-departamento">
+                  Ingrese el departamento.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="calle" class="form-label">Calle</label>
+                <input type="text" class="form-control" id="calle" required />
+                <div class="error-message" id="error-calle">
+                  Ingrese la calle.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="numerodepuerta" class="form-label"
+                  >Número de puerta</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="numerodepuerta"
+                  required
+                />
+                <div class="error-message" id="error-numerodepuerta">
+                  Ingrese el número de puerta.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="esquina" class="form-label">Esquina</label>
+                <input type="text" class="form-control" id="esquina" required />
+                <div class="error-message" id="error-esquina">
+                  Ingrese la esquina.
+                </div>
+              </div>
+            </div>
+
+            <!-- Tipo de envío -->
+            <div class="p-4 rounded shadow-sm mt-4 buy-form-section">
+              <h4 class="mb-3">Tipo de envío</h4>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="envio"
+                    id="envio-premium"
+                    value="premium"
+                    required
+                  />
+                  <label class="form-check-label" for="envio-premium"
+                    >Premium 2 a 5 días (15%)</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="envio"
+                    id="envio-express"
+                    value="express"
+                    required
+                  />
+                  <label class="form-check-label" for="envio-express"
+                    >Express 5 a 8 días (7%)</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="envio"
+                    id="envio-standard"
+                    value="standard"
+                    required
+                  />
+                  <label class="form-check-label" for="envio-standard"
+                    >Standard 12 a 15 días (5%)</label
+                  >
+                </div>
+                <div class="error-message" id="error-envio">
+                  Seleccione un tipo de envío.
+                </div>
+              </div>
+            </div>
+
+            <!-- Forma de pago -->
+            <div class="p-4 rounded shadow-sm mt-4 buy-form-section">
+              <h4 class="mb-3">Forma de pago</h4>
+              <div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="pago"
+                    id="pago-tarjeta"
+                    value="tarjeta"
+                    required
+                  />
+                  <label class="form-check-label" for="pago-tarjeta"
+                    >Tarjeta de crédito o débito</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="pago"
+                    id="pago-transferencia"
+                    value="transferencia"
+                    required
+                  />
+                  <label class="form-check-label" for="pago-transferencia"
+                    >Transferencia bancaria</label
+                  >
+                </div>
+                <div class="error-message" id="error-pago">
+                  Seleccione una forma de pago.
+                </div>
+
+                <!-- Campos adicionales para tarjeta -->
+                <div id="campos-tarjeta" class="mt-4" style="display: none;">
+                  <h5 class="mb-3">Datos de la tarjeta</h5>
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label for="numero-tarjeta" class="form-label">Número de tarjeta</label>
+                      <input type="text" class="form-control" id="numero-tarjeta" placeholder="1234 5678 9012 3456" maxlength="19">
+                      <div class="error-message" id="error-numero-tarjeta">Ingrese el número de tarjeta.</div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                      <label for="titular-tarjeta" class="form-label">Nombre del titular</label>
+                      <input type="text" class="form-control" id="titular-tarjeta" placeholder="Como aparece en la tarjeta">
+                      <div class="error-message" id="error-titular-tarjeta">Ingrese el nombre del titular.</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="vencimiento" class="form-label">Vencimiento (MM/AA)</label>
+                      <input type="text" class="form-control" id="vencimiento" placeholder="12/25" maxlength="5">
+                      <div class="error-message" id="error-vencimiento">Ingrese la fecha de vencimiento.</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="cvv" class="form-label">CVV</label>
+                      <input type="text" class="form-control" id="cvv" placeholder="123" maxlength="3">
+                      <div class="error-message" id="error-cvv">Ingrese el CVV.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Campos adicionales para transferencia -->
+                <div id="campos-transferencia" class="mt-4" style="display: none;">
+                  <h5 class="mb-3">Datos de transferencia</h5>
+                  <div class="mb-3">
+                    <label for="banco" class="form-label">Banco de origen</label>
+                    <select class="form-control" id="banco">
+                      <option value="">Seleccione su banco</option>
+                      <option value="brou">BROU</option>
+                      <option value="itau">Itaú</option>
+                      <option value="santander">Santander</option>
+                      <option value="scotiabank">Scotiabank</option>
+                      <option value="bbva">BBVA</option>
+                      <option value="otro">Otro</option>
+                    </select>
+                    <div class="error-message" id="error-banco">Seleccione un banco.</div>
+                  </div>
+                  <div class="alert alert-transferencia">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Los datos para realizar la transferencia se enviarán a tu correo electrónico.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Costos -->
+        <div class="col-lg-4">
+          <div
+            class="p-4 rounded shadow-sm sticky-top buy-form-section"
+            style="top: 100px"
+          >
+            <h4 class="mb-3">Costos</h4>
+            <p id="subtotal">Subtotal: $0</p>
+            <p id="envio-costo">Costo de envío: $0</p>
+            <hr />
+            <h5 id="total">Total: $0</h5>
+            <button
+              type="submit"
+              form="buy-form"
+              class="btn btn-primary w-100 mt-3"
+            >
+              Confirmar compra
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-end"><a href="#">Volver arriba</a></p>
+        <p>
+          Este sitio forma parte de
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+            >Jóvenes a Programar</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/mostrarUsuarioLogueado.js"></script>
+    <script src="js/proteccion.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/buy-now.js"></script>
+  </body>
+</html>

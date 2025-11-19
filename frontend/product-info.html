@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>eMercado - Todo lo que busques está aquí</title>
+
+    <!-- Fuentes y estilos -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
+      rel="stylesheet"
+    />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <!-- Font Awesome 6 para estrellas -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Aplicar tema inmediatamente para evitar flash blanco -->
+    <script>
+      const tema = localStorage.getItem("tema") || "light";
+      document.documentElement.setAttribute("data-theme", tema);
+    </script>
+  </head>
+
+  <body>
+    <!-- Header Responsive -->
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="img/japLogo.png" alt="Logo JAP" class="me-2 logo-nav" />
+              <span class="fw-bold text-white fs-4">e-Mercado</span>
+            </a>
+            <button
+              id="theme-toggle"
+              class="theme-toggle ms-3"
+              onclick="cambiarTema(event)"
+            >
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link fw-semibold text-white" href="index.html">
+                  <i class="fas fa-home me-1"></i>Inicio
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link fw-semibold text-white"
+                  href="categories.html"
+                >
+                  <i class="fas fa-th-large me-1"></i>Categorías
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-semibold text-white" href="sell.html">
+                  <i class="fas fa-plus-circle me-1"></i>Vender
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link fw-semibold text-white position-relative"
+                  href="cart.html"
+                >
+                  <i class="fa fa-shopping-cart"></i>
+                  <span class="ms-1">Carrito</span>
+                  <span
+                    id="cart-count"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style="font-size: 0.65rem"
+                    >0</span
+                  >
+                </a>
+              </li>
+              <li class="nav-item" id="userNav"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-fluid py-4">
+      <div class="row mb-4">
+        <div class="col-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <button
+                  id="back-to-category"
+                  class="btn btn-link p-0 text-decoration-none back-button"
+                >
+                  <i class="fas fa-arrow-left me-1"></i>Volver
+                </button>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                <span id="product-category"></span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h1 id="product-name" class="display-6 fw-bold mb-2"></h1>
+              <p id="product-sold" class="text-muted mb-0"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout principal: Producto + Relacionados -->
+      <div class="row">
+        <!-- Columna principal del producto -->
+        <div class="col-lg-8 col-xl-9">
+          <!-- Carrusel de imágenes -->
+          <div class="card shadow-sm mb-4">
+            <div class="card-body p-0">
+              <div
+                id="product-images"
+                class="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-inner" id="carousel-inner"></div>
+
+                <!-- Controles del carrusel -->
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#product-images"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#product-images"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+
+              <div class="p-3">
+                <div class="row g-2" id="carousel-thumbs"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-body">
+              <div id="product-description"></div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-custom">
+              <h3 class="card-title mb-0 fw-bold">
+                <i class="fas fa-comments me-2"></i>Comentarios
+              </h3>
+            </div>
+            <div class="card-body">
+              <div
+                id="comentarios-container"
+                class="list-group list-group-flush"
+              ></div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="card-header bg-custom">
+              <h3 class="card-title mb-0 fw-bold">
+                <i class="fas fa-star me-2"></i>Califica este producto
+              </h3>
+            </div>
+            <div class="card-body">
+              <form class="rating-form">
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Tu calificación:</label>
+                  <div class="rating-stars">
+                    <input
+                      type="radio"
+                      id="estrella5"
+                      name="rating"
+                      value="5"
+                    />
+                    <label for="estrella5" title="5 estrellas"
+                      ><i class="fa-solid fa-star"></i
+                    ></label>
+                    <input
+                      type="radio"
+                      id="estrella4"
+                      name="rating"
+                      value="4"
+                    />
+                    <label for="estrella4" title="4 estrellas"
+                      ><i class="fa-solid fa-star"></i
+                    ></label>
+                    <input
+                      type="radio"
+                      id="estrella3"
+                      name="rating"
+                      value="3"
+                    />
+                    <label for="estrella3" title="3 estrellas"
+                      ><i class="fa-solid fa-star"></i
+                    ></label>
+                    <input
+                      type="radio"
+                      id="estrella2"
+                      name="rating"
+                      value="2"
+                    />
+                    <label for="estrella2" title="2 estrellas"
+                      ><i class="fa-solid fa-star"></i
+                    ></label>
+                    <input
+                      type="radio"
+                      id="estrella1"
+                      name="rating"
+                      value="1"
+                    />
+                    <label for="estrella1" title="1 estrella"
+                      ><i class="fa-solid fa-star"></i
+                    ></label>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="comentario" class="form-label fw-semibold"
+                    >Tu comentario:</label
+                  >
+                  <textarea
+                    id="comentario"
+                    name="comentario"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Comparte tu experiencia con este producto..."
+                  ></textarea>
+                </div>
+
+                <button
+                  id="send-rating"
+                  type="submit"
+                  class="btn btn-warning text-white fw-semibold"
+                >
+                  <i class="fas fa-paper-plane me-2"></i>Enviar calificación
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-xl-3">
+          <div class="row">
+            <div class="d-grid gap-3">
+              <div class="card shadow-sm border-0 mt-4">
+                <div class="card-body p-4">
+                  <h6 class="fw-bold text-dark mb-3">Selecciona la cantidad</h6>
+
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label
+                        for="cantidad"
+                        class="form-label mb-1 text-muted small"
+                        >Cantidad</label
+                      >
+                      <input
+                        type="number"
+                        id="cantidad"
+                        value="1"
+                        min="1"
+                        class="form-control form-control-sm text-center"
+                        style="width: 80px"
+                      />
+                    </div>
+
+                    <div class="col">
+                      <div class="text-end">
+                        <div class="small text-muted">Subtotal</div>
+                        <div class="h5 fw-bold text-success mb-0">
+                          <span id="subtotal">UYU 0</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-end mt-2">
+                    <small class="text-muted">
+                      Precio unitario:
+                      <strong id="precio-unitario">UYU 0</strong>
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botones de acción -->
+              <button id="btn-buyNow" class="btn btn-lg py-3 w-100 mt-3">
+                Comprar ahora
+              </button>
+              <button
+                id="btn-cart"
+                class="btn btn-outline-dark btn-lg py-3 w-100"
+              >
+                Añadir al carrito
+              </button>
+            </div>
+          </div>
+
+          <!-- Productos relacionados -->
+          <div class="card shadow-sm sticky-top related-products-card mt-4">
+            <div class="card-header related-products-header">
+              <h5 class="card-title mb-0 fw-bold">
+                <i class="fas fa-th-large me-2"></i>
+                Productos relacionados
+              </h5>
+            </div>
+            <div class="card-body p-0">
+              <div id="related-products" class="list-group list-group-flush">
+                <!-- Productos relacionados se cargan dinámicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-end"><a href="#">Volver arriba</a></p>
+        <p>
+          Este sitio forma parte de
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+            >Jovenes a Programar</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <!-- Spinner -->
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/product-info.js"></script>
+    <script src="js/cart-badge.js"></script>
+    <script src="js/mostrarUsuarioLogueado.js"></script>
+    <script src="js/proteccion.js"></script>
+    <script src="js/theme-toggle.js"></script>
+  </body>
+</html>

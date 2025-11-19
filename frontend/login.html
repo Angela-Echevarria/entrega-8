@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eMercado - Login</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navegación de autenticación -->
+    <div class="auth-nav">
+      <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-overlay">
+      <div class="login-modal">
+        <form>
+          <div>
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Ingresa tu email"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="contrasena">Contraseña:</label>
+            <div class="password-container">
+              <input
+                type="password"
+                id="contrasena"
+                name="contrasena"
+                required
+              />
+              <img
+                src="img/ojo abierto.png"
+                id="togglePassword"
+                class="eye-icon"
+                alt="Mostrar/Ocultar contraseña"
+              />
+            </div>
+          </div>
+
+          <div>
+            <button type="submit">Ingresar</button>
+          </div>
+
+          <div class="text-center mt-3">
+            <a href="registro.html" class="naranja"
+              >¿No tienes usuario? Regístrate</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/mostrarUsuarioLogueado.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/theme-toggle.js"></script>
+
+    <script>
+      // Configurar el botón de tema
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", cambiarTema);
+        }
+      });
+    </script>
+  </body>
+</html>
